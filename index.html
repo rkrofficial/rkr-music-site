@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RKR</title>
+    <meta name="description" content="RKR – Producer & DJ based in New York.">
+    <link rel="icon" type="image/jpeg" href="/rkr/rkr.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #000000;
+            --cream: #F0EBE0;
+            --gold: #C9A84C;
+            --gold-dim: rgba(201, 168, 76, 0.4);
+            --dim: #555;
+            --faint: #222;
+        }
+
+        html, body {
+            height: 100%;
+            background: var(--bg);
+            color: var(--cream);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 300;
+            overflow: hidden;
+        }
+
+        /* Grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px;
+            z-index: 100;
+        }
+
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            height: 100dvh;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Logo */
+        .logo {
+            width: clamp(120px, 22vw, 180px);
+            height: auto;
+            mix-blend-mode: lighten;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+        }
+
+        /* Name */
+        .name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 500;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            letter-spacing: 0.45em;
+            margin-top: 1.4rem;
+            text-indent: 0.45em;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        /* Gold rule */
+        .rule {
+            width: 40px;
+            height: 1px;
+            background: var(--gold);
+            margin-top: 1.2rem;
+            opacity: 0;
+            animation: fadeScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+        }
+
+        /* Descriptor */
+        .descriptor {
+            font-size: 0.65rem;
+            letter-spacing: 0.35em;
+            text-indent: 0.35em;
+            color: var(--cream);
+            font-weight: 500;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 2.2rem;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.2s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.65rem 1.6rem;
+            border-radius: 100px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 400;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--cream);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            background: var(--gold);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(201, 168, 76, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--cream);
+            border: 1px solid rgba(240, 235, 224, 0.25);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-1px);
+        }
+
+        /* SVG icons inside buttons */
+        .btn svg {
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+        }
+
+        .btn-primary svg {
+            fill: var(--bg);
+        }
+
+        .btn-primary:hover svg {
+            fill: var(--bg);
+        }
+
+        .btn-outline svg {
+            fill: var(--cream);
+            transition: fill 0.35s;
+        }
+
+        .btn-outline:hover svg {
+            fill: var(--gold);
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 1.5s forwards;
+        }
+
+        .footer a {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: var(--cream);
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.35s;
+        }
+
+        .footer a:hover {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeScale {
+            from {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            to {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 480px) {
+            .buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 220px;
+                gap: 0.6rem;
+            }
+
+            .btn {
+                justify-content: center;
+                padding: 0.7rem 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <img class="logo" src="/rkr/rkr.jpg" alt="RKR">
+
+        <h1 class="name">RKR</h1>
+
+        <div class="rule"></div>
+
+        <p class="descriptor">New York · Beirut</p>
+
+        <div class="buttons">
+            <a href="https://open.spotify.com/artist/1ZoBRxiNTw3fPNqkxqDHF6" target="_blank" rel="noopener" class="btn btn-primary">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                Spotify
+            </a>
+            <a href="https://on.soundcloud.com/LsMvnOmxF6U2hJ8t9E" target="_blank" rel="noopener" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1.175 12.225c-.051 0-.094.046-.101.1l-.233 2.154.233 2.105c.007.058.05.098.101.098.05 0 .09-.04.099-.098l.255-2.105-.27-2.154c-.009-.06-.05-.1-.1-.1m-.899.828c-.06 0-.091.037-.104.094L0 14.479l.172 1.282c.013.06.045.094.104.094.057 0 .09-.037.104-.094l.199-1.282-.199-1.332c-.014-.057-.047-.094-.104-.094m1.8-.702c-.065 0-.105.053-.112.117l-.217 2.01.217 2.002c.007.064.047.117.112.117.065 0 .105-.053.114-.117l.248-2.002-.248-2.01c-.009-.064-.049-.117-.114-.117m.899-.333c-.073 0-.117.06-.125.13l-.196 2.343.196 2.293c.008.072.052.13.125.13.073 0 .117-.058.127-.13l.222-2.293-.222-2.343c-.01-.07-.054-.13-.127-.13m.9-.3c-.081 0-.131.068-.139.149l-.175 2.643.175 2.542c.008.08.058.149.139.149.08 0 .13-.069.14-.149l.2-2.542-.2-2.643c-.01-.081-.06-.149-.14-.149m.898-.155c-.089 0-.139.075-.148.163l-.154 2.798.154 2.703c.009.088.059.163.148.163.088 0 .139-.075.15-.163l.176-2.703-.176-2.798c-.011-.088-.062-.163-.15-.163m.9-.138c-.098 0-.147.083-.156.178l-.133 2.936.133 2.83c.009.096.058.178.156.178.097 0 .147-.082.158-.178l.151-2.83-.151-2.936c-.011-.095-.061-.178-.158-.178m.9-.042c-.106 0-.155.09-.164.192l-.112 2.978.112 2.889c.009.104.058.192.164.192.105 0 .155-.088.166-.192l.127-2.889-.127-2.978c-.011-.102-.061-.192-.166-.192m2.705-.586c-.044-.006-.09-.009-.136-.009-.189 0-.371.034-.543.097-.111-.63-.376-1.21-.776-1.698-.4-.488-.914-.86-1.5-1.089-.585-.228-1.212-.296-1.834-.196-.094.015-.156.09-.156.186v8.396c0 .1.069.18.164.194h4.781c1.088 0 1.972-.885 1.972-1.975s-.883-1.975-1.972-1.975m-3.609.521c-.114 0-.163.097-.172.207l-.091 3.019.091 2.93c.009.11.058.207.172.207.113 0 .163-.097.174-.207l.103-2.93-.103-3.019c-.011-.11-.061-.207-.174-.207m-.898.282c-.114 0-.155.09-.164.199l-.112 2.737.112 2.752c.009.11.05.199.164.199.113 0 .155-.089.165-.199l.127-2.752-.127-2.737c-.01-.109-.052-.199-.165-.199"/></svg>
+                SoundCloud
+            </a>
+        </div>
+
+        <div class="footer">
+            <a href="mailto:hello@rkrofficial.com">Bookings & Inquiries</a>
+        </div>
+
+    </div>
+</body>
+</html>
+
